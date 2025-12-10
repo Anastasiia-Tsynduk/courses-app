@@ -1,0 +1,96 @@
+.create-course-wrapper {
+    max-width: 110.4rem;
+    margin: 10rem auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+
+.create-course-wrapper h2 {
+    font-size: 3.2rem;
+    font-weight: 700;
+    align-self: flex-start;
+}
+
+.create-course-container {
+    width: 110.4rem;
+    height: auto;
+    padding: 3.2rem 4.8rem;
+    border: 0.1rem solid var(--color-border, #dcdcdc);
+    border-radius: 0.4rem;
+    background-color: var(--color-background-white, #ffffff);
+}
+
+.create-course-container h3 {
+    font-size: 2.4rem;
+}
+
+.create-course-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+}
+
+.create-course-container .main-container,
+.duration-container,
+.authors-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.description-container label {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    color: var(--color-text-label);
+}
+
+.description-container textarea {
+    width: 100%;
+    height: 15.2rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 1rem;
+    font-size: 1.6rem;
+    color: var(--color-text-input);
+    transition: border-color 0.2s ease-in;
+    background-color: var(--color-background-white);
+    resize: none;
+    box-sizing: border-box;
+}
+
+.description-container textarea::placeholder {
+    font-family: var(--font-primary);
+    font-size: 1.6rem;
+}
+
+.description-container.has-error textarea {
+    border-color: #ff0000;
+}
+
+.description-container .error-message {
+    color: #ff0000;
+    font-size: 1.4rem;
+    margin: 0.4rem 0 0;
+    text-align: left;
+}
+
+.duration {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.duration p {
+    font-size: 1.6rem;
+}
+
+.create-course-action {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2rem;
+}

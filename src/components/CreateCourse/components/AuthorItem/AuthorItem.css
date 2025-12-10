@@ -1,0 +1,10 @@
+.author-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.author-name {
+    font-size: 1.6rem;
+}

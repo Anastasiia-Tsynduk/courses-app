@@ -1,0 +1,9 @@
+.login {
+    text-decoration: none;
+    color: var(--color-text);
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    cursor: pointer;
+    margin-left: 0.4rem;
+}
