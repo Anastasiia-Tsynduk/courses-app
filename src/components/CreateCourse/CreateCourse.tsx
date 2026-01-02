@@ -9,9 +9,9 @@ import AuthorsSection from "./AuthorsSection/AuthorsSection";
 import getCourseDuration from "../../helpers/getCourseDuration";
 import { Author } from "../../helpers/getAuthorsText";
 
-import { addCourse } from "../../store/courses/coursesSlice";
+import { addCourse, addCourseAsync } from "../../store/courses/coursesSlice";
 import { setAuthors } from "@/store/authors/authorsSlice";
-import { RootState } from "@/store";
+import { AppDispatch, RootState } from "@/store";
 
 import "./CreateCourse.css";
 
@@ -85,7 +85,7 @@ const CreateCourse: React.FC = () => {
             authors: courseAuthors.map((author) => author.id),
         };
 
-        dispatch(addCourse(newCourse));
+        (dispatch as AppDispatch)(addCourseAsync(newCourse));
 
         cleanupForm();
         navigate("/courses");

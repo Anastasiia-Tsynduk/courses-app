@@ -13,7 +13,11 @@ import { BUTTON_SHOW_COURSE } from "../../../../constants";
 
 import "./CourseCard.css";
 
-import { deleteCourse } from "../../../../store/courses/coursesSlice";
+import {
+    deleteCourse,
+    deleteCourseAsync,
+} from "../../../../store/courses/coursesSlice";
+import { AppDispatch } from "@/store";
 
 type CourseCardProps = {
     course: Course;
@@ -27,7 +31,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, authors }) => {
     const authorsText = getAuthorsText(course.authors, authors);
 
     const handleDelete = () => {
-        dispatch(deleteCourse(course.id));
+        (dispatch as AppDispatch)(deleteCourseAsync(course.id));
     };
 
     return (

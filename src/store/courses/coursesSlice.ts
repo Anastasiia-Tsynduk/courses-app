@@ -1,7 +1,44 @@
 import { Course } from "../../helpers/Course";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+const API_URL = "http://localhost:4000/courses";
 
 const coursesInitialState: Course[] = [];
+
+export const addCourseAsync = createAsyncThunk(
+    "course/addCourseAsync",
+    async (course: Course) => {
+        console.log(JSON.stringify(course));
+        const response = await fetch(`${API_URL}/add`, {
+            method: "POST",
+            body: JSON.stringify(course),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: localStorage.getItem("token") ?? "",
+            },
+        });
+        if (!response.ok) {
+            throw new Error("Error adding of course");
+        }
+        return course;
+    }
+);
+
+export const deleteCourseAsync = createAsyncThunk(
+    "course/deleteCourseAsync",
+    async (id: string) => {
+        const response = await fetch(`${API_URL}/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: localStorage.getItem("token") ?? "",
+            },
+        });
+        if (!response.ok) {
+            throw new Error("Error deleting of course");
+        }
+        return id;
+    }
+);
 
 const coursesSlice = createSlice({
     name: "courses",
@@ -23,6 +60,17 @@ const coursesSlice = createSlice({
                 course.id === action.payload.id ? action.payload : course
             );
         },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(deleteCourseAsync.fulfilled, (currentState, action) => {
+                return currentState.filter(
+                    (course) => course.id !== action.payload
+                );
+            })
+            .addCase(addCourseAsync.fulfilled, (currentState, action) => {
+                return [...currentState, action.payload];
+            });
     },
 });
 
