@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UserState {
     isAuth: boolean;
@@ -6,6 +6,18 @@ interface UserState {
     email: string;
     token: string;
 }
+
+export const logoutAsync = createAsyncThunk("user/logout", async () => {
+    const response = await fetch("http://localhost:4000/logout", {
+        method: "DELETE",
+        headers: {
+            Authorization: localStorage.getItem("token") ?? "",
+        },
+    });
+    if (!response.ok) {
+        throw new Error("Error logouting");
+    }
+});
 
 const getUserFromLocalStorage = (): UserState => {
     const userString = localStorage.getItem("user");
@@ -40,6 +52,8 @@ const userSlice = createSlice({
             return { isAuth: false, name: "", email: "", token: "" };
         },
     },
+    extraReducers: (builder) =>
+        builder.addCase(logoutAsync.fulfilled, () => {}),
 });
 
 export const { login, logout } = userSlice.actions;

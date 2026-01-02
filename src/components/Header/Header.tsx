@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "../../common/Button/Button";
 import Logo from "./components/Logo/Logo";
 
-import { logout } from "../../store/user/userSlice";
-import { RootState } from "../../store";
+import { logout, logoutAsync } from "../../store/user/userSlice";
+import { AppDispatch, RootState } from "../../store";
 
 import "./Header.css";
 
@@ -17,9 +17,9 @@ const Header: React.FC = () => {
     const token = user.token;
 
     const handleLogout = () => {
+        (dispatch as AppDispatch)(logoutAsync());
         localStorage.removeItem("token");
         localStorage.removeItem("user");
-        dispatch(logout());
         navigate("/login");
     };
 
