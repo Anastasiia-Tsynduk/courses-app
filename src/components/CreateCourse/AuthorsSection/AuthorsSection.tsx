@@ -7,8 +7,12 @@ import AuthorItem from "../components/AuthorItem/AuthorItem";
 
 import { Author } from "../../../helpers/getAuthorsText";
 
-import { addAuthor, removeAuthor } from "../../../store/authors/authorsSlice";
-import { RootState } from "@/store";
+import {
+    addAuthor,
+    addAuthorAsync,
+    removeAuthor,
+} from "../../../store/authors/authorsSlice";
+import { AppDispatch, RootState } from "@/store";
 
 import "./AuthorsSection.css";
 
@@ -46,7 +50,7 @@ const AuthorsSection: React.FC<AuthorsSectionProps> = ({
         }
 
         const newAuthor = { id: generateId(), name };
-        dispatch(addAuthor(newAuthor));
+        (dispatch as AppDispatch)(addAuthorAsync(newAuthor));
 
         setNewAuthorName("");
         setAuthorError("");

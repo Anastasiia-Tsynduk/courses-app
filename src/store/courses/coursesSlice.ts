@@ -8,7 +8,6 @@ const coursesInitialState: Course[] = [];
 export const addCourseAsync = createAsyncThunk(
     "course/addCourseAsync",
     async (course: Course) => {
-        console.log(JSON.stringify(course));
         const response = await fetch(`${API_URL}/add`, {
             method: "POST",
             body: JSON.stringify(course),
