@@ -6,7 +6,7 @@ const API_URL = "http://localhost:4000/authors";
 const authorsInitialState: Author[] = [];
 
 export const addAuthorAsync = createAsyncThunk(
-    "authors/addAuthorsAsync",
+    "authors/addAuthorAsync",
     async (author: Author) => {
         console.log(JSON.stringify(author));
         const response = await fetch(`${API_URL}/add`, {
@@ -21,6 +21,22 @@ export const addAuthorAsync = createAsyncThunk(
             throw new Error("Cannot add the authors");
         }
         return author;
+    }
+);
+
+export const removeAuthorAsync = createAsyncThunk(
+    "author/deleteAuthorAsync",
+    async (id: string) => {
+        const response = await fetch(`${API_URL}/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: localStorage.getItem("token") ?? "",
+            },
+        });
+        if (!response.ok) {
+            throw new Error("Cannot delete the course");
+        }
+        return id;
     }
 );
 
@@ -41,9 +57,15 @@ const authorsSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(addAuthorAsync.fulfilled, (currentState, action) => {
-            return [...currentState, action.payload];
-        });
+        builder
+            .addCase(addAuthorAsync.fulfilled, (currentState, action) => {
+                return [...currentState, action.payload];
+            })
+            .addCase(removeAuthorAsync.fulfilled, (currentState, action) => {
+                return currentState.filter(
+                    (course) => course.id !== action.payload
+                );
+            });
     },
 });
 

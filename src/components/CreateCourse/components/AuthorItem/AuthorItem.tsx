@@ -7,6 +7,7 @@ type AuthorItemProps = {
     name: string;
     onAdd?: (id: string) => void;
     onDelete?: (id: string) => void;
+    onRemoveFromBackend?: (id: string) => void;
 };
 
 const AuthorItem: React.FC<AuthorItemProps> = ({
@@ -14,25 +15,36 @@ const AuthorItem: React.FC<AuthorItemProps> = ({
     name,
     onAdd,
     onDelete,
+    onRemoveFromBackend,
 }) => {
     return (
         <div className="author-item">
             <span className="author-name">{name}</span>
-            {onAdd && (
-                <Button
-                    buttonText="Add author"
-                    onClick={() => onAdd(id)}
-                    width="12rem"
-                    height="1rem"
-                />
+            {onAdd && onRemoveFromBackend && (
+                <>
+                    <Button
+                        buttonText="➡️"
+                        onClick={() => onAdd(id)}
+                        width="3rem"
+                        height="3rem"
+                    />
+                    <Button
+                        buttonText="🗑️"
+                        onClick={() => onRemoveFromBackend(id)}
+                        width="3rem"
+                        height="1rem"
+                    />
+                </>
             )}
             {onDelete && (
-                <Button
-                    buttonText="Delete author"
-                    onClick={() => onDelete(id)}
-                    width="12rem"
-                    height="1rem"
-                />
+                <>
+                    <Button
+                        buttonText="⬅️"
+                        onClick={() => onDelete(id)}
+                        width="3rem"
+                        height="1rem"
+                    />
+                </>
             )}
         </div>
     );

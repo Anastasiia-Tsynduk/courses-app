@@ -11,6 +11,7 @@ import {
     addAuthor,
     addAuthorAsync,
     removeAuthor,
+    removeAuthorAsync,
 } from "../../../store/authors/authorsSlice";
 import { AppDispatch, RootState } from "@/store";
 
@@ -73,6 +74,10 @@ const AuthorsSection: React.FC<AuthorsSectionProps> = ({
         dispatch(addAuthor(author));
     };
 
+    const handleRemoveFromBackend = (id: string) => {
+        (dispatch as AppDispatch)(removeAuthorAsync(id));
+    };
+
     return (
         <div className="authors-section">
             <div className="authos-creation">
@@ -114,6 +119,7 @@ const AuthorsSection: React.FC<AuthorsSectionProps> = ({
                             key={author.id}
                             name={author.name}
                             onAdd={handleAddAuthor}
+                            onRemoveFromBackend={handleRemoveFromBackend}
                         />
                     ))}
                 </div>
