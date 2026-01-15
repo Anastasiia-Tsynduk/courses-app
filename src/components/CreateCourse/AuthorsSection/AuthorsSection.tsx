@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import Input from "../../../common/Input/Input";
 import Button from "../../../common/Button/Button";
@@ -8,16 +8,16 @@ import AuthorItem from "../components/AuthorItem/AuthorItem";
 import { Author } from "../../../helpers/getAuthorsText";
 
 import {
-    addAuthor,
     addAuthorAsync,
-    removeAuthor,
     removeAuthorAsync,
 } from "../../../store/authors/authorsSlice";
-import { AppDispatch, RootState } from "@/store";
+import { AppDispatch } from "@/store";
 
 import "./AuthorsSection.css";
 
 type AuthorsSectionProps = {
+    setExistedAuthors: React.Dispatch<React.SetStateAction<Author[]>>;
+    existedAuthors: Author[];
     courseAuthors: Author[];
     setCourseAuthors: React.Dispatch<React.SetStateAction<Author[]>>;
     setErrors: React.Dispatch<
@@ -34,6 +34,8 @@ const generateId = () =>
     Date.now().toString(36) + Math.random().toString(36).substring(2, 5);
 
 const AuthorsSection: React.FC<AuthorsSectionProps> = ({
+    setExistedAuthors,
+    existedAuthors,
     courseAuthors,
     setCourseAuthors,
     setErrors,
@@ -41,7 +43,6 @@ const AuthorsSection: React.FC<AuthorsSectionProps> = ({
     const [newAuthorName, setNewAuthorName] = useState("");
     const [authorError, setAuthorError] = useState("");
     const dispatch = useDispatch();
-    const existedAuthors = useSelector((state: RootState) => state.authors);
 
     const handleCreateAuthor = () => {
         const name = newAuthorName.trim();
@@ -53,6 +54,7 @@ const AuthorsSection: React.FC<AuthorsSectionProps> = ({
         const newAuthor = { id: generateId(), name };
         (dispatch as AppDispatch)(addAuthorAsync(newAuthor));
 
+        setExistedAuthors([...existedAuthors, newAuthor]);
         setNewAuthorName("");
         setAuthorError("");
     };
@@ -62,20 +64,21 @@ const AuthorsSection: React.FC<AuthorsSectionProps> = ({
         if (!author) return;
 
         setCourseAuthors([...courseAuthors, author]);
-        dispatch(removeAuthor(id));
+        setExistedAuthors(existedAuthors.filter((author) => author.id !== id));
+
         setErrors((prev) => ({ ...prev, authors: "" }));
     };
 
     const handleDeleteAuthor = (id: string) => {
         const author = courseAuthors.find((author) => author.id === id);
         if (!author) return;
-
-        setCourseAuthors(courseAuthors.filter((a) => a.id !== id));
-        dispatch(addAuthor(author));
+        setCourseAuthors(courseAuthors.filter((author) => author.id !== id));
+        setExistedAuthors([...existedAuthors, author]);
     };
 
     const handleRemoveFromBackend = (id: string) => {
         (dispatch as AppDispatch)(removeAuthorAsync(id));
+        setExistedAuthors(existedAuthors.filter((author) => author.id !== id));
     };
 
     return (

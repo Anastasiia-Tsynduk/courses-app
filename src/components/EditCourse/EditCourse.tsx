@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
-import Input from "../../common/Input/Input";
-import Button from "../../common/Button/Button";
-import AuthorsSection from "./AuthorsSection/AuthorsSection";
-
-import getCourseDuration from "../../helpers/getCourseDuration";
-import { Author } from "../../helpers/getAuthorsText";
-
-import { addCourseAsync } from "../../store/courses/coursesSlice";
-import { setAuthors } from "@/store/authors/authorsSlice";
+import Input from "@/common/Input/Input";
+import { Author } from "@/helpers/getAuthorsText";
+import getCourseDuration from "@/helpers/getCourseDuration";
 import { AppDispatch, RootState } from "@/store";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import AuthorsSection from "../CreateCourse/AuthorsSection/AuthorsSection";
+import Button from "@/common/Button/Button";
+import { updateCourseAsync } from "@/store/courses/coursesSlice";
 
-import "./CreateCourse.css";
+const EditCourse: React.FC = () => {
+    const { courseId } = useParams<{ courseId: string }>();
 
-const generateId = () =>
-    Date.now().toString(36) + Math.random().toString(36).substring(2, 5);
+    const courses = useSelector((state: RootState) => state.courses);
+    const course = courses.find((course) => course.id === courseId);
 
-const CreateCourse: React.FC = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [duration, setDuration] = useState("");
-    const [courseAuthors, setCourseAuthors] = useState<Author[]>([]);
+
+    const allAuthors = useSelector((state: RootState) => state.authors);
+    const [courseAuthors, setCourseAuthors] = useState<Author[]>(
+        allAuthors.filter((author) => course?.authors.includes(author.id))
+    );
+    const [existedAuthors, setExistedAuthors] = useState<Author[]>([]);
     const [errors, setErrors] = useState({
         title: "",
         description: "",
@@ -32,31 +33,43 @@ const CreateCourse: React.FC = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const allAuthors = useSelector((state: RootState) => state.authors);
-
-    const [existedAuthors, setExistedAuthors] = useState(allAuthors);
 
     const formattedDuration = getCourseDuration(Number(duration));
 
     useEffect(() => {
-        setExistedAuthors(
-            allAuthors.filter((author) => !courseAuthors.includes(author))
-        );
-    }, [allAuthors]);
+        if (course) {
+            setTitle(course.title);
+            setDescription(course.description);
+            setDuration(String(course.duration));
+            setExistedAuthors(
+                allAuthors.filter(
+                    (author) => !course.authors.includes(author.id)
+                )
+            );
+            setCourseAuthors(
+                allAuthors.filter((author) =>
+                    course?.authors.includes(author.id)
+                )
+            );
+        }
+    }, [course]);
 
     const cleanupForm = () => {
-        setTitle("");
-        setDescription("");
-        setDuration("");
-        setCourseAuthors([]);
-        setExistedAuthors(allAuthors);
-        setErrors({
-            title: "",
-            description: "",
-            duration: "",
-            authors: "",
-        });
-        dispatch(setAuthors([...existedAuthors, ...courseAuthors]));
+        if (course) {
+            setTitle(course.title);
+            setDescription(course.description);
+            setDuration(String(course.duration));
+            setExistedAuthors(
+                allAuthors.filter(
+                    (author) => !course.authors.includes(author.id)
+                )
+            );
+            setCourseAuthors(
+                allAuthors.filter((author) =>
+                    course?.authors.includes(author.id)
+                )
+            );
+        }
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -84,16 +97,16 @@ const CreateCourse: React.FC = () => {
             return;
         }
 
-        const newCourse = {
-            id: generateId(),
+        const updatedCourse = {
+            id: course?.id ?? "",
+            creationDate: course?.creationDate ?? "",
             title,
             description,
-            creationDate: new Date().toLocaleDateString("en-GB"),
             duration: Number(duration),
             authors: courseAuthors.map((author) => author.id),
         };
 
-        (dispatch as AppDispatch)(addCourseAsync(newCourse));
+        (dispatch as AppDispatch)(updateCourseAsync(updatedCourse));
 
         cleanupForm();
         navigate("/courses");
@@ -101,11 +114,11 @@ const CreateCourse: React.FC = () => {
 
     return (
         <div className="create-course-wrapper">
-            <h2>Course edit/Create page</h2>
+            <h2>Course edit</h2>
             <div className="create-course-container">
                 <form onSubmit={handleSubmit}>
                     <div className="main-container">
-                        <h3>Main Info</h3>
+                        <h3>Main info</h3>
                         <Input
                             labelText="Title"
                             placeholderText="Enter course name"
@@ -199,7 +212,7 @@ const CreateCourse: React.FC = () => {
                             onClick={cleanupForm}
                         />
                         <Button
-                            buttonText="CREATE COURSE"
+                            buttonText="EDIT COURSE"
                             type="submit"
                             width="18.5rem"
                         />
@@ -210,4 +223,4 @@ const CreateCourse: React.FC = () => {
     );
 };
 
-export default CreateCourse;
+export default EditCourse;

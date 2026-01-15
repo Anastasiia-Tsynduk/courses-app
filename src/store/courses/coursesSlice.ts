@@ -39,6 +39,24 @@ export const deleteCourseAsync = createAsyncThunk(
     }
 );
 
+export const updateCourseAsync = createAsyncThunk(
+    "course/updateCourseAsync",
+    async (course: Course) => {
+        const response = await fetch(`${API_URL}/${course.id}`, {
+            method: "PUT",
+            body: JSON.stringify(course),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: localStorage.getItem("token") ?? "",
+            },
+        });
+        if (!response.ok) {
+            throw new Error("Error updating of course");
+        }
+        return course;
+    }
+);
+
 const coursesSlice = createSlice({
     name: "courses",
     initialState: coursesInitialState,
@@ -69,7 +87,17 @@ const coursesSlice = createSlice({
             })
             .addCase(addCourseAsync.fulfilled, (currentState, action) => {
                 return [...currentState, action.payload];
-            });
+            })
+            .addCase(
+                updateCourseAsync.fulfilled,
+                (currentState, action: PayloadAction<Course>) => {
+                    return currentState.map((course) =>
+                        course.id === action.payload.id
+                            ? action.payload
+                            : course
+                    );
+                }
+            );
     },
 });
 

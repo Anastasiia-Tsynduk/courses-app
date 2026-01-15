@@ -13,6 +13,7 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import { AppDispatch, RootState } from "./store";
 import { setAuthors } from "./store/authors/authorsSlice";
 import { setCourses } from "./store/courses/coursesSlice";
+import EditCourse from "./components/EditCourse/EditCourse";
 
 const AppWrapper = () => {
     return (
@@ -97,6 +98,14 @@ function App() {
                         element={
                             <PrivateRoute>
                                 <CreateCourse />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/courses/:courseId/edit"
+                        element={
+                            <PrivateRoute>
+                                <EditCourse />
                             </PrivateRoute>
                         }
                     />

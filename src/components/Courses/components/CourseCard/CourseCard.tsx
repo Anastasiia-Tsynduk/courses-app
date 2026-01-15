@@ -13,10 +13,7 @@ import { BUTTON_SHOW_COURSE } from "../../../../constants";
 
 import "./CourseCard.css";
 
-import {
-    deleteCourse,
-    deleteCourseAsync,
-} from "../../../../store/courses/coursesSlice";
+import { deleteCourseAsync } from "../../../../store/courses/coursesSlice";
 import { AppDispatch } from "@/store";
 
 type CourseCardProps = {
@@ -66,11 +63,13 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, authors }) => {
                             width="6rem"
                             height="5rem"
                         />
-                        <Button
-                            buttonText="Update"
-                            width="6rem"
-                            height="5rem"
-                        />
+
+                        <Link
+                            to={`/courses/${course.id}/edit`}
+                            className="link"
+                        >
+                            Update
+                        </Link>
                     </div>
                 </div>
             </div>
