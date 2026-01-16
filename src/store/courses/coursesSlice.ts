@@ -1,15 +1,12 @@
 import { CourseRuquest } from "@/helpers/CourseRequest";
 import { Course } from "../../helpers/Course";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import converResultToCourse from "@/helpers/convertResultToCourse";
+import { UpdateCoursePayload } from "@/helpers/UpdateCoursePayload";
 
 const API_URL = "http://localhost:4000/courses";
 
 const coursesInitialState: Course[] = [];
-
-export type UpdateCoursePayload = {
-    course: CourseRuquest;
-    id: string;
-};
 
 export const addCourseAsync = createAsyncThunk(
     "course/addCourseAsync",
@@ -26,15 +23,8 @@ export const addCourseAsync = createAsyncThunk(
             throw new Error("Error adding of course");
         }
         const responseJson = await response.json();
-        const result = responseJson.result;
-        return {
-            title: result.title,
-            description: result.description,
-            duration: result.duration,
-            authors: result.authors,
-            id: result.id,
-            creationDate: result.creationDate,
-        };
+
+        return converResultToCourse(responseJson);
     }
 );
 
@@ -69,15 +59,8 @@ export const updateCourseAsync = createAsyncThunk(
             throw new Error("Error updating of course");
         }
         const responseJson = await response.json();
-        const result = responseJson.result;
-        return {
-            title: result.title,
-            description: result.description,
-            duration: result.duration,
-            authors: result.authors,
-            creationDate: result.creationDate,
-            id: result.id,
-        };
+
+        return converResultToCourse(responseJson);
     }
 );
 

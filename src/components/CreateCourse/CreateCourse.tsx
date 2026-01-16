@@ -14,6 +14,7 @@ import { setAuthors } from "@/store/authors/authorsSlice";
 import { AppDispatch, RootState } from "@/store";
 
 import "./CreateCourse.css";
+import transformCourseFromUiToApi from "@/helpers/transformCourseFromUiToApi";
 
 const CreateCourse: React.FC = () => {
     const [title, setTitle] = useState("");
@@ -81,12 +82,12 @@ const CreateCourse: React.FC = () => {
             return;
         }
 
-        const newCourse = {
+        const newCourse = transformCourseFromUiToApi(
             title,
             description,
-            duration: Number(duration),
-            authors: courseAuthors.map((author) => author.id),
-        };
+            duration,
+            courseAuthors
+        );
 
         (dispatch as AppDispatch)(addCourseAsync(newCourse));
 

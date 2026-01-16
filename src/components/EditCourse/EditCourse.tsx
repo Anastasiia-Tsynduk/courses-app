@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import AuthorsSection from "../CreateCourse/AuthorsSection/AuthorsSection";
 import Button from "@/common/Button/Button";
 import { updateCourseAsync } from "@/store/courses/coursesSlice";
+import transformCourseFromUiToApi from "@/helpers/transformCourseFromUiToApi";
 
 const EditCourse: React.FC = () => {
     const { courseId } = useParams<{ courseId: string }>();
@@ -97,12 +98,12 @@ const EditCourse: React.FC = () => {
             return;
         }
 
-        const updatedCourse = {
+        const updatedCourse = transformCourseFromUiToApi(
             title,
             description,
-            duration: Number(duration),
-            authors: courseAuthors.map((author) => author.id),
-        };
+            duration,
+            courseAuthors
+        );
 
         const updateCoursePayload = {
             course: updatedCourse,
