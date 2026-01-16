@@ -6,6 +6,11 @@ const API_URL = "http://localhost:4000/courses";
 
 const coursesInitialState: Course[] = [];
 
+export type UpdateCoursePayload = {
+    course: CourseRuquest;
+    id: string;
+};
+
 export const addCourseAsync = createAsyncThunk(
     "course/addCourseAsync",
     async (course: CourseRuquest) => {
@@ -51,10 +56,10 @@ export const deleteCourseAsync = createAsyncThunk(
 
 export const updateCourseAsync = createAsyncThunk(
     "course/updateCourseAsync",
-    async (course: Course) => {
-        const response = await fetch(`${API_URL}/${course.id}`, {
+    async (payload: UpdateCoursePayload) => {
+        const response = await fetch(`${API_URL}/${payload.id}`, {
             method: "PUT",
-            body: JSON.stringify(course),
+            body: JSON.stringify(payload.course),
             headers: {
                 "Content-Type": "application/json",
                 Authorization: localStorage.getItem("token") ?? "",
@@ -63,7 +68,16 @@ export const updateCourseAsync = createAsyncThunk(
         if (!response.ok) {
             throw new Error("Error updating of course");
         }
-        return course;
+        const responseJson = await response.json();
+        const result = responseJson.result;
+        return {
+            title: result.title,
+            description: result.description,
+            duration: result.duration,
+            authors: result.authors,
+            creationDate: result.creationDate,
+            id: result.id,
+        };
     }
 );
 

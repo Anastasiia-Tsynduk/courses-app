@@ -13,7 +13,7 @@ const EditCourse: React.FC = () => {
     const { courseId } = useParams<{ courseId: string }>();
 
     const courses = useSelector((state: RootState) => state.courses);
-    const course = courses.find((course) => course.id === courseId);
+    const foundCourse = courses.find((course) => course.id === courseId);
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -21,7 +21,7 @@ const EditCourse: React.FC = () => {
 
     const allAuthors = useSelector((state: RootState) => state.authors);
     const [courseAuthors, setCourseAuthors] = useState<Author[]>(
-        allAuthors.filter((author) => course?.authors.includes(author.id))
+        allAuthors.filter((author) => foundCourse?.authors.includes(author.id))
     );
     const [existedAuthors, setExistedAuthors] = useState<Author[]>([]);
     const [errors, setErrors] = useState({
@@ -37,36 +37,36 @@ const EditCourse: React.FC = () => {
     const formattedDuration = getCourseDuration(Number(duration));
 
     useEffect(() => {
-        if (course) {
-            setTitle(course.title);
-            setDescription(course.description);
-            setDuration(String(course.duration));
+        if (foundCourse) {
+            setTitle(foundCourse.title);
+            setDescription(foundCourse.description);
+            setDuration(String(foundCourse.duration));
             setExistedAuthors(
                 allAuthors.filter(
-                    (author) => !course.authors.includes(author.id)
+                    (author) => !foundCourse.authors.includes(author.id)
                 )
             );
             setCourseAuthors(
                 allAuthors.filter((author) =>
-                    course?.authors.includes(author.id)
+                    foundCourse?.authors.includes(author.id)
                 )
             );
         }
-    }, [course]);
+    }, [foundCourse]);
 
     const cleanupForm = () => {
-        if (course) {
-            setTitle(course.title);
-            setDescription(course.description);
-            setDuration(String(course.duration));
+        if (foundCourse) {
+            setTitle(foundCourse.title);
+            setDescription(foundCourse.description);
+            setDuration(String(foundCourse.duration));
             setExistedAuthors(
                 allAuthors.filter(
-                    (author) => !course.authors.includes(author.id)
+                    (author) => !foundCourse.authors.includes(author.id)
                 )
             );
             setCourseAuthors(
                 allAuthors.filter((author) =>
-                    course?.authors.includes(author.id)
+                    foundCourse?.authors.includes(author.id)
                 )
             );
         }
@@ -98,15 +98,18 @@ const EditCourse: React.FC = () => {
         }
 
         const updatedCourse = {
-            id: course?.id ?? "",
-            creationDate: course?.creationDate ?? "",
             title,
             description,
             duration: Number(duration),
             authors: courseAuthors.map((author) => author.id),
         };
 
-        (dispatch as AppDispatch)(updateCourseAsync(updatedCourse));
+        const updateCoursePayload = {
+            course: updatedCourse,
+            id: courseId ?? "",
+        };
+
+        (dispatch as AppDispatch)(updateCourseAsync(updateCoursePayload));
 
         cleanupForm();
         navigate("/courses");

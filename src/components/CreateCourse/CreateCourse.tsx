@@ -15,9 +15,6 @@ import { AppDispatch, RootState } from "@/store";
 
 import "./CreateCourse.css";
 
-const generateId = () =>
-    Date.now().toString(36) + Math.random().toString(36).substring(2, 5);
-
 const CreateCourse: React.FC = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
