@@ -85,10 +85,8 @@ const CreateCourse: React.FC = () => {
         }
 
         const newCourse = {
-            id: generateId(),
             title,
             description,
-            creationDate: new Date().toLocaleDateString("en-GB"),
             duration: Number(duration),
             authors: courseAuthors.map((author) => author.id),
         };

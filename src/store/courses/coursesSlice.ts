@@ -1,3 +1,4 @@
+import { CourseRuquest } from "@/helpers/CourseRequest";
 import { Course } from "../../helpers/Course";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -7,7 +8,7 @@ const coursesInitialState: Course[] = [];
 
 export const addCourseAsync = createAsyncThunk(
     "course/addCourseAsync",
-    async (course: Course) => {
+    async (course: CourseRuquest) => {
         const response = await fetch(`${API_URL}/add`, {
             method: "POST",
             body: JSON.stringify(course),
@@ -19,7 +20,16 @@ export const addCourseAsync = createAsyncThunk(
         if (!response.ok) {
             throw new Error("Error adding of course");
         }
-        return course;
+        const responseJson = await response.json();
+        const result = responseJson.result;
+        return {
+            title: result.title,
+            description: result.description,
+            duration: result.duration,
+            authors: result.authors,
+            id: result.id,
+            creationDate: result.creationDate,
+        };
     }
 );
 
