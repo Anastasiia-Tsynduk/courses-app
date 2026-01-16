@@ -1,4 +1,5 @@
-import { Author } from "../../helpers/getAuthorsText";
+import { AuthorRequest } from "@/helpers/AuthorRequest";
+import { Author } from "../../helpers/Author";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const API_URL = "http://localhost:4000/authors";
@@ -7,8 +8,7 @@ const authorsInitialState: Author[] = [];
 
 export const addAuthorAsync = createAsyncThunk(
     "authors/addAuthorAsync",
-    async (author: Author) => {
-        console.log(JSON.stringify(author));
+    async (author: AuthorRequest) => {
         const response = await fetch(`${API_URL}/add`, {
             method: "POST",
             body: JSON.stringify(author),
@@ -20,7 +20,12 @@ export const addAuthorAsync = createAsyncThunk(
         if (!response.ok) {
             throw new Error("Cannot add the authors");
         }
-        return author;
+        const responseJson = await response.json();
+        const result = responseJson.result;
+        return {
+            id: result.id,
+            name: result.name,
+        };
     }
 );
 

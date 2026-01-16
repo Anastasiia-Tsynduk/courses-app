@@ -7,7 +7,7 @@ import Button from "../../common/Button/Button";
 import AuthorsSection from "./AuthorsSection/AuthorsSection";
 
 import getCourseDuration from "../../helpers/getCourseDuration";
-import { Author } from "../../helpers/getAuthorsText";
+import { Author } from "../../helpers/Author";
 
 import { addCourseAsync } from "../../store/courses/coursesSlice";
 import { setAuthors } from "@/store/authors/authorsSlice";

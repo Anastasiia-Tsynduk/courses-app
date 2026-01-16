@@ -5,7 +5,7 @@ import Input from "../../../common/Input/Input";
 import Button from "../../../common/Button/Button";
 import AuthorItem from "../components/AuthorItem/AuthorItem";
 
-import { Author } from "../../../helpers/getAuthorsText";
+import { Author } from "../../../helpers/Author";
 
 import {
     addAuthorAsync,
@@ -44,17 +44,19 @@ const AuthorsSection: React.FC<AuthorsSectionProps> = ({
     const [authorError, setAuthorError] = useState("");
     const dispatch = useDispatch();
 
-    const handleCreateAuthor = () => {
+    const handleCreateAuthor = async () => {
         const name = newAuthorName.trim();
         if (name.length < 2) {
             setAuthorError("Author name should be at least 2 characters");
             return;
         }
 
-        const newAuthor = { id: generateId(), name };
-        (dispatch as AppDispatch)(addAuthorAsync(newAuthor));
+        const newAuthor = { name };
+        const authorResponse = await (dispatch as AppDispatch)(
+            addAuthorAsync(newAuthor)
+        ).unwrap();
 
-        setExistedAuthors([...existedAuthors, newAuthor]);
+        setExistedAuthors([...existedAuthors, authorResponse]);
         setNewAuthorName("");
         setAuthorError("");
     };

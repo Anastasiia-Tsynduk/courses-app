@@ -1,4 +1,4 @@
-export type Author = { id: string; name: string };
+import { Author } from "./Author";
 
 const getAuthorsText = (authorIds: string[], allAuthors: Author[]) =>
     authorIds

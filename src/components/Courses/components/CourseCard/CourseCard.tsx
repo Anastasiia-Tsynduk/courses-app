@@ -6,8 +6,9 @@ import Button from "../../../../common/Button/Button";
 
 import getCourseDuration from "../../../../helpers/getCourseDuration";
 import formatCreationDate from "../../../../helpers/formatCreationDate";
-import getAuthorsText, { Author } from "../../../../helpers/getAuthorsText";
+import getAuthorsText from "../../../../helpers/getAuthorsText";
 import { Course } from "../../../../helpers/Course";
+import { Author } from "../../../../helpers/Author";
 
 import { BUTTON_SHOW_COURSE } from "../../../../constants";
 

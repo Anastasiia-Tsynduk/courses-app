@@ -1,5 +1,5 @@
 import Input from "@/common/Input/Input";
-import { Author } from "@/helpers/getAuthorsText";
+import { Author } from "@/helpers/Author";
 import getCourseDuration from "@/helpers/getCourseDuration";
 import { AppDispatch, RootState } from "@/store";
 import { useEffect, useState } from "react";

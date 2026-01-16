@@ -6,7 +6,7 @@ import CourseCard from "./components/CourseCard/CourseCard";
 
 import "./Courses.css";
 
-import { Author } from "../../helpers/getAuthorsText";
+import { Author } from "../../helpers/Author";
 import { Course } from "../../helpers/Course";
 
 type CoursesProps = {

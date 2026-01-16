@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "../../common/Button/Button";
 import Logo from "./components/Logo/Logo";
 
-import { logout, logoutAsync } from "../../store/user/userSlice";
+import { logoutAsync } from "../../store/user/userSlice";
 import { AppDispatch, RootState } from "../../store";
 
 import "./Header.css";
