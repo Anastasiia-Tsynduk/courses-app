@@ -1,4 +1,4 @@
-import { CourseRuquest } from "./CourseRequest";
+import { CourseRuquest } from "../models/CourseRequest";
 
 export type UpdateCoursePayload = {
     course: CourseRuquest;

@@ -1,5 +1,5 @@
-import { AuthorRequest } from "@/helpers/AuthorRequest";
-import { Author } from "../../helpers/Author";
+import { AuthorRequest } from "@/models/AuthorRequest";
+import { Author } from "../../models/Author";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const API_URL = "http://localhost:4000/authors";

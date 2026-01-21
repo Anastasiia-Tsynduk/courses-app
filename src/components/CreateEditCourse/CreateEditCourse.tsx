@@ -1,7 +1,7 @@
 import Button from "@/common/Button/Button";
 import Input from "@/common/Input/Input";
 import AuthorsSection from "../CreateCourse/AuthorsSection/AuthorsSection";
-import { Author } from "@/helpers/Author";
+import { Author } from "@/models/Author";
 import getCourseDuration from "@/helpers/getCourseDuration";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";

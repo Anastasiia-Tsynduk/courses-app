@@ -5,7 +5,7 @@ import Input from "../../../common/Input/Input";
 import Button from "../../../common/Button/Button";
 import AuthorItem from "../components/AuthorItem/AuthorItem";
 
-import { Author } from "../../../helpers/Author";
+import { Author } from "../../../models/Author";
 
 import {
     addAuthorAsync,

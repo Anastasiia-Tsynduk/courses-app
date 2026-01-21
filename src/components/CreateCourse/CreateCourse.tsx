@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Author } from "../../helpers/Author";
+import { Author } from "../../models/Author";
 
 import { addCourseAsync } from "../../store/courses/coursesSlice";
 import { AppDispatch, RootState } from "@/store";

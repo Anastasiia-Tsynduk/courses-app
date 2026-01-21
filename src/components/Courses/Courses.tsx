@@ -6,8 +6,8 @@ import CourseCard from "./components/CourseCard/CourseCard";
 
 import "./Courses.css";
 
-import { Author } from "../../helpers/Author";
-import { Course } from "../../helpers/Course";
+import { Author } from "../../models/Author";
+import { Course } from "../../models/Course";
 
 type CoursesProps = {
     authors: Author[];

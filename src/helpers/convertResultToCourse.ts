@@ -1,4 +1,4 @@
-import { Course } from "./Course";
+import { Course } from "../models/Course";
 
 const converResultToCourse = (responseJson: any): Course => {
     const result = responseJson.result;

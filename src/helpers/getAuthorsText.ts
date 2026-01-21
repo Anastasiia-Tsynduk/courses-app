@@ -1,4 +1,4 @@
-import { Author } from "./Author";
+import { Author } from "../models/Author";
 
 const getAuthorsText = (authorIds: string[], allAuthors: Author[]) =>
     authorIds

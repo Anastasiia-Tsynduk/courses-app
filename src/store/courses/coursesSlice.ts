@@ -1,8 +1,8 @@
-import { CourseRuquest } from "@/helpers/CourseRequest";
-import { Course } from "../../helpers/Course";
+import { CourseRuquest } from "@/models/CourseRequest";
+import { Course } from "../../models/Course";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import converResultToCourse from "@/helpers/convertResultToCourse";
-import { UpdateCoursePayload } from "@/helpers/UpdateCoursePayload";
+import { UpdateCoursePayload } from "@/models/UpdateCoursePayload";
 
 const API_URL = "http://localhost:4000/courses";
 

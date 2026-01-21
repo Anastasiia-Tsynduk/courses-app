@@ -1,4 +1,4 @@
-import { Author } from "@/helpers/Author";
+import { Author } from "@/models/Author";
 import { AppDispatch, RootState } from "@/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
