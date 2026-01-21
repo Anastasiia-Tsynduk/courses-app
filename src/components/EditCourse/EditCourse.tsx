@@ -74,7 +74,7 @@ const EditCourse: React.FC = () => {
             id: courseId ?? "",
         };
 
-        dispatch(updateCourseAsync(updateCoursePayload));
+        return dispatch(updateCourseAsync(updateCoursePayload));
     };
 
     return (

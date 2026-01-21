@@ -42,7 +42,7 @@ const CreateCourse: React.FC = () => {
             courseAuthors
         );
 
-        dispatch(addCourseAsync(newCourse));
+        return dispatch(addCourseAsync(newCourse));
     };
 
     return (

@@ -22,7 +22,7 @@ type CreateEditCourseProps = {
     setExistedAuthors: React.Dispatch<React.SetStateAction<Author[]>>;
     buttonText: string;
     cleanupForm: () => void;
-    performCourseActionInBackEnd: () => void;
+    performCourseActionInBackEnd: () => Promise<Object>;
 };
 
 const CreateEditCourse: React.FC<CreateEditCourseProps> = ({
@@ -51,7 +51,7 @@ const CreateEditCourse: React.FC<CreateEditCourseProps> = ({
     const navigate = useNavigate();
     const [errors, setErrors] = useState(noErrorsState);
 
-    const processErrors = () => {
+    const findErrors = () => {
         const newErrors = {
             title:
                 title.trim().length < 2
@@ -67,22 +67,19 @@ const CreateEditCourse: React.FC<CreateEditCourseProps> = ({
                     : "",
             authors: courseAuthors.length === 0 ? "Author list is empty" : "",
         };
-
         setErrors(newErrors);
+        return newErrors;
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        new Promise(() => {
-            processErrors();
-            if (Object.values(errors).some((err) => err !== "")) {
-                return;
-            }
-        }).then(() => {
-            performCourseActionInBackEnd();
-            cleanupFormAndErrors();
-            navigate("/courses");
-        });
+        const foundErrors = findErrors();
+        if (Object.values(foundErrors).some((err) => err !== "")) {
+            return;
+        }
+        await performCourseActionInBackEnd();
+        cleanupFormAndErrors();
+        navigate("/courses");
     };
 
     const cleanupFormAndErrors = () => {
