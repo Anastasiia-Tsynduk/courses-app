@@ -11,8 +11,8 @@ import CourseInfo from "./components/CourseInfo/CourseInfo";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 import { AppDispatch, RootState } from "./store";
-import { setAuthors } from "./store/authors/authorsSlice";
-import { setCourses } from "./store/courses/coursesSlice";
+import { addAllAuthorsAsync } from "./store/authors/authorsSlice";
+import { addAllCoursesAsync } from "./store/courses/coursesSlice";
 import EditCourse from "./components/EditCourse/EditCourse";
 
 const AppWrapper = () => {
@@ -25,27 +25,13 @@ const AppWrapper = () => {
 
 function App() {
     const dispatch: AppDispatch = useDispatch();
+
     const courses = useSelector((state: RootState) => state.courses);
     const authors = useSelector((state: RootState) => state.authors);
 
     useEffect(() => {
-        const getCoursesAndAuthors = async () => {
-            const [coursesRes, authorsRes] = await Promise.all([
-                fetch("http://localhost:4000/courses/all"),
-                fetch("http://localhost:4000/authors/all"),
-            ]);
-
-            if (!coursesRes.ok) throw new Error("Courses not found");
-            if (!authorsRes.ok) throw new Error("Authors not found");
-
-            const coursesData = await coursesRes.json();
-            const authorsData = await authorsRes.json();
-
-            dispatch(setCourses(coursesData.result));
-            dispatch(setAuthors(authorsData.result));
-        };
-
-        getCoursesAndAuthors();
+        dispatch(addAllCoursesAsync());
+        dispatch(addAllAuthorsAsync());
     }, [dispatch]);
 
     return (

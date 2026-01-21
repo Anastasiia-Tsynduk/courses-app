@@ -6,6 +6,18 @@ const API_URL = "http://localhost:4000/authors";
 
 const authorsInitialState: Author[] = [];
 
+export const addAllAuthorsAsync = createAsyncThunk(
+    "course/addAllAuthorsAsync",
+    async () => {
+        const response = await fetch(`${API_URL}/all`);
+        if (!response.ok) {
+            throw new Error("Authors not found");
+        }
+        const responseJson = await response.json();
+        return responseJson.result;
+    }
+);
+
 export const addAuthorAsync = createAsyncThunk(
     "authors/addAuthorAsync",
     async (author: AuthorRequest) => {
@@ -49,9 +61,6 @@ const authorsSlice = createSlice({
     name: "authors",
     initialState: authorsInitialState,
     reducers: {
-        setAuthors(_currentState, action: PayloadAction<Author[]>) {
-            return action.payload;
-        },
         addAuthor(currentState, action: PayloadAction<Author>) {
             return [...currentState, action.payload];
         },
@@ -63,6 +72,12 @@ const authorsSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(
+                addAllAuthorsAsync.fulfilled,
+                (_currentState, action: PayloadAction<Author[]>) => {
+                    return action.payload;
+                }
+            )
             .addCase(addAuthorAsync.fulfilled, (currentState, action) => {
                 return [...currentState, action.payload];
             })
@@ -74,6 +89,6 @@ const authorsSlice = createSlice({
     },
 });
 
-export const { setAuthors, addAuthor, removeAuthor } = authorsSlice.actions;
+export const { addAuthor, removeAuthor } = authorsSlice.actions;
 
 export default authorsSlice.reducer;

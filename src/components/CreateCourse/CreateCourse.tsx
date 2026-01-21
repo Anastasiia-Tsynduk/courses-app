@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Author } from "../../helpers/Author";
 
 import { addCourseAsync } from "../../store/courses/coursesSlice";
-import { setAuthors } from "@/store/authors/authorsSlice";
 import { AppDispatch, RootState } from "@/store";
 
 import transformCourseFromUiToApi from "@/helpers/transformCourseFromUiToApi";
@@ -33,7 +32,6 @@ const CreateCourse: React.FC = () => {
         setDuration("");
         setCourseAuthors([]);
         setExistedAuthors(allAuthors);
-        dispatch(setAuthors([...existedAuthors, ...courseAuthors]));
     };
 
     const createCourseInBackend = () => {

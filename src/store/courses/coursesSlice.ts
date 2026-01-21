@@ -8,6 +8,19 @@ const API_URL = "http://localhost:4000/courses";
 
 const coursesInitialState: Course[] = [];
 
+export const addAllCoursesAsync = createAsyncThunk(
+    "course/addAllCourseAsync",
+    async () => {
+        const response = await fetch(`${API_URL}/all`);
+
+        if (!response.ok) {
+            throw new Error("Courses not found");
+        }
+        const responseJson = await response.json();
+        return responseJson.result;
+    }
+);
+
 export const addCourseAsync = createAsyncThunk(
     "course/addCourseAsync",
     async (course: CourseRuquest) => {
@@ -68,9 +81,6 @@ const coursesSlice = createSlice({
     name: "courses",
     initialState: coursesInitialState,
     reducers: {
-        setCourses(_currentState, action: PayloadAction<Course[]>) {
-            return action.payload;
-        },
         deleteCourse(currentState, action: PayloadAction<string>) {
             return currentState.filter(
                 (course) => course.id !== action.payload
@@ -87,6 +97,12 @@ const coursesSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(
+                addAllCoursesAsync.fulfilled,
+                (_currentState, action: PayloadAction<Course[]>) => {
+                    return action.payload;
+                }
+            )
             .addCase(deleteCourseAsync.fulfilled, (currentState, action) => {
                 return currentState.filter(
                     (course) => course.id !== action.payload
@@ -108,7 +124,6 @@ const coursesSlice = createSlice({
     },
 });
 
-export const { setCourses, deleteCourse, addCourse, updateCourse } =
-    coursesSlice.actions;
+export const { deleteCourse, addCourse, updateCourse } = coursesSlice.actions;
 
 export default coursesSlice.reducer;
