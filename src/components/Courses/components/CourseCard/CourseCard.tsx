@@ -23,13 +23,13 @@ type CourseCardProps = {
 };
 
 const CourseCard: React.FC<CourseCardProps> = ({ course, authors }) => {
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const formattedDuration = getCourseDuration(course.duration);
     const formattedDate = formatCreationDate(course.creationDate);
     const authorsText = getAuthorsText(course.authors, authors);
 
     const handleDelete = () => {
-        (dispatch as AppDispatch)(deleteCourseAsync(course.id));
+        dispatch(deleteCourseAsync(course.id));
     };
 
     return (

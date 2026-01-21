@@ -11,13 +11,13 @@ import { AppDispatch, RootState } from "../../store";
 import "./Header.css";
 
 const Header: React.FC = () => {
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector((state: RootState) => state.user);
     const token = user.token;
 
     const handleLogout = () => {
-        (dispatch as AppDispatch)(logoutAsync());
+        dispatch(logoutAsync());
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         navigate("/login");

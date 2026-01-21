@@ -10,7 +10,7 @@ import transformCourseFromUiToApi from "@/helpers/transformCourseFromUiToApi";
 import CreateEditCourse from "../CreateEditCourse/CreateEditCourse";
 
 const CreateCourse: React.FC = () => {
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -42,7 +42,7 @@ const CreateCourse: React.FC = () => {
             courseAuthors
         );
 
-        (dispatch as AppDispatch)(addCourseAsync(newCourse));
+        dispatch(addCourseAsync(newCourse));
     };
 
     return (

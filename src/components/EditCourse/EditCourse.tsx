@@ -8,7 +8,7 @@ import transformCourseFromUiToApi from "@/helpers/transformCourseFromUiToApi";
 import CreateEditCourse from "../CreateEditCourse/CreateEditCourse";
 
 const EditCourse: React.FC = () => {
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
 
     const { courseId } = useParams<{ courseId: string }>();
 
@@ -74,7 +74,7 @@ const EditCourse: React.FC = () => {
             id: courseId ?? "",
         };
 
-        (dispatch as AppDispatch)(updateCourseAsync(updateCoursePayload));
+        dispatch(updateCourseAsync(updateCoursePayload));
     };
 
     return (

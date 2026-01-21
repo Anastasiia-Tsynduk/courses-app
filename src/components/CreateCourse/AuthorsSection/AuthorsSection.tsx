@@ -39,7 +39,7 @@ const AuthorsSection: React.FC<AuthorsSectionProps> = ({
 }) => {
     const [newAuthorName, setNewAuthorName] = useState("");
     const [authorError, setAuthorError] = useState("");
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
 
     const handleCreateAuthor = async () => {
         const name = newAuthorName.trim();
@@ -49,7 +49,7 @@ const AuthorsSection: React.FC<AuthorsSectionProps> = ({
         }
 
         const newAuthor = { name };
-        const authorResponse = await (dispatch as AppDispatch)(
+        const authorResponse = await dispatch(
             addAuthorAsync(newAuthor)
         ).unwrap();
 
@@ -76,7 +76,7 @@ const AuthorsSection: React.FC<AuthorsSectionProps> = ({
     };
 
     const handleRemoveFromBackend = (id: string) => {
-        (dispatch as AppDispatch)(removeAuthorAsync(id));
+        dispatch(removeAuthorAsync(id));
         setExistedAuthors(existedAuthors.filter((author) => author.id !== id));
     };
 
