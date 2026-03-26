@@ -77,6 +77,17 @@ export const updateCourseAsync = createAsyncThunk(
     }
 );
 
+// export const filterCourseAsync = createAsyncThunk(
+//     "course/filterCourseAsync",
+//     async (payload:) => {
+//         const response = await fetch(`${API_URL}/filter?`, {
+
+//         }
+
+//         )
+//     }
+// );
+
 const coursesSlice = createSlice({
     name: "courses",
     initialState: coursesInitialState,

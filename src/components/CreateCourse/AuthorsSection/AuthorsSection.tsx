@@ -122,6 +122,7 @@ const AuthorsSection: React.FC<AuthorsSectionProps> = ({
                             name={author.name}
                             onAdd={handleAddAuthor}
                             onRemoveFromBackend={handleRemoveFromBackend}
+                            setExistedAuthors={setExistedAuthors}
                         />
                     ))}
                 </div>

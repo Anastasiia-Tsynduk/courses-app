@@ -1,6 +1,8 @@
 import { AuthorRequest } from "@/models/AuthorRequest";
 import { Author } from "../../models/Author";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { UpdateAuthorPayload } from "@/models/UpdateAuthorPayload";
+import convertResultToAuthor from "@/helpers/convertResultToAuthor";
 
 const API_URL = "http://localhost:4000/authors";
 
@@ -57,6 +59,25 @@ export const removeAuthorAsync = createAsyncThunk(
     }
 );
 
+export const updateAuthorAsync = createAsyncThunk(
+    "author/updateAuthorAsync",
+    async (payload: UpdateAuthorPayload) => {
+        const response = await fetch(`${API_URL}/${payload.id}`, {
+            method: "PUT",
+            body: JSON.stringify(payload.author),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: localStorage.getItem("token") ?? "",
+            },
+        });
+        if (!response.ok) {
+            throw new Error("Error updating of author");
+        }
+        const responseJson = await response.json();
+        return convertResultToAuthor(responseJson);
+    }
+);
+
 const authorsSlice = createSlice({
     name: "authors",
     initialState: authorsInitialState,
@@ -83,9 +104,19 @@ const authorsSlice = createSlice({
             })
             .addCase(removeAuthorAsync.fulfilled, (currentState, action) => {
                 return currentState.filter(
-                    (course) => course.id !== action.payload
+                    (author) => author.id !== action.payload
                 );
-            });
+            })
+            .addCase(
+                updateAuthorAsync.fulfilled,
+                (currentState, action: PayloadAction<Author>) => {
+                    return currentState.map((author) =>
+                        author.id === action.payload.id
+                            ? action.payload
+                            : author
+                    );
+                }
+            );
     },
 });
 

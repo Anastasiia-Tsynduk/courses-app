@@ -1,0 +1,22 @@
+.dropdown-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+
+.dropdown {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 0.375rem;
+    background-color: var(--color-background-white);
+    font-size: 1.4rem;
+    color: var(--color-text-input);
+    appearance: none;
+    width: 150px;
+    text-overflow: ellipsis;
+}

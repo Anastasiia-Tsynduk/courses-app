@@ -4,10 +4,41 @@
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 3rem;
 }
 
-.courses-container .link {
-    align-self: flex-end;
+.form-and-create-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.filter-form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 2rem;
+}
+
+.filters {
+    display: flex;
+    gap: 2rem;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 2rem;
+}
+
+.create-course-button {
+    align-self: self-end;
+}
+
+.no-courses {
+    padding: 2rem;
+    border: 2px dashed var(--color-border);
+    border-radius: 0.5rem;
+    text-align: center;
+    color: #333;
+    font-weight: 500;
+    font-size: 2rem;
 }
