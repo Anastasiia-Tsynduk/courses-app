@@ -62,54 +62,55 @@ const Courses: React.FC<CoursesProps> = ({ authors, courses }) => {
 
     return (
         <div className="courses-container">
-            <div className="form-and-create-button">
-                <form className="filter-form" onSubmit={handleApplyFilters}>
-                    <div className="filters">
-                        <DropdownList
-                            value={duration}
-                            onChange={setDuration}
-                            labelText="Duration"
-                            optionValues={courses.map((course) =>
-                                course.duration.toString()
-                            )}
-                        />
-                        <DropdownList
-                            value={creationDate}
-                            onChange={setCreationDate}
-                            labelText="Creation date"
-                            optionValues={courses.map(
-                                (course) => course.creationDate
-                            )}
-                        />
-                        <DropdownList
-                            value={description}
-                            onChange={setDescription}
-                            labelText="Description"
-                            optionValues={courses.map(
-                                (course) => course.description
-                            )}
-                        />
-                        <DropdownList
-                            value={title}
-                            onChange={setTitle}
-                            labelText="Title"
-                            optionValues={courses.map((course) => course.title)}
-                        />
-                    </div>
-                    <div className="filter-buttons">
-                        <Button type="submit" buttonText="Apply filters" />
-                        <Button
-                            type="button"
-                            buttonText="Reset"
-                            onClick={resetFilters}
-                        />
-                    </div>
-                </form>
+            <div className="courses-header">
+                <h2 className="courses-title">Courses</h2>
 
-                <Link to="/courses/add" className="link create-course-button">
-                    create course
+                <Link to="/courses/add" className="link">
+                    + Create Course
                 </Link>
             </div>
+            <form className="filter-form" onSubmit={handleApplyFilters}>
+                <div className="filters">
+                    <DropdownList
+                        value={duration}
+                        onChange={setDuration}
+                        labelText="Duration"
+                        optionValues={courses.map((course) =>
+                            course.duration.toString()
+                        )}
+                    />
+                    <DropdownList
+                        value={creationDate}
+                        onChange={setCreationDate}
+                        labelText="Creation date"
+                        optionValues={courses.map(
+                            (course) => course.creationDate
+                        )}
+                    />
+                    <DropdownList
+                        value={description}
+                        onChange={setDescription}
+                        labelText="Description"
+                        optionValues={courses.map(
+                            (course) => course.description
+                        )}
+                    />
+                    <DropdownList
+                        value={title}
+                        onChange={setTitle}
+                        labelText="Title"
+                        optionValues={courses.map((course) => course.title)}
+                    />
+                </div>
+                <div className="filter-buttons">
+                    <Button type="submit" buttonText="APPLY FILTERS" />
+                    <Button
+                        type="button"
+                        buttonText="RESET"
+                        onClick={resetFilters}
+                    />
+                </div>
+            </form>
 
             {filteredCourses.length === 0 ? (
                 <p className="no-courses">No courses match the filter!</p>

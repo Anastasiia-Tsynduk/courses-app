@@ -28,6 +28,12 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, authors }) => {
     const formattedDate = formatCreationDate(course.creationDate);
     const authorsText = getAuthorsText(course.authors, authors);
 
+    const MAX_VISIBLE = 5;
+    const authorsArray = authorsText.split(", ");
+    const visibleAuthors = authorsArray.slice(0, MAX_VISIBLE);
+    const hasMore = authorsArray.length > MAX_VISIBLE;
+    const shortAuthorsText = visibleAuthors.join(", ");
+
     const handleDelete = () => {
         dispatch(deleteCourseAsync(course.id));
     };
@@ -41,9 +47,15 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, authors }) => {
                 </div>
                 <div>
                     <div className="card-details">
-                        <p className="course-authors">
+                        <p
+                            className="course-authors"
+                            title={hasMore ? authorsText : ""}
+                        >
                             <span className="label">Authors:</span>{" "}
-                            <span className="value">{authorsText}</span>
+                            <span className="value">
+                                {shortAuthorsText}
+                                {hasMore && " ..."}
+                            </span>
                         </p>
                         <p>
                             <span className="label">Duration:</span>
@@ -60,9 +72,8 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, authors }) => {
                         </Link>
                         <Button
                             onClick={handleDelete}
-                            buttonText="Delete"
-                            width="6rem"
-                            height="5rem"
+                            buttonText="DELETE"
+                            className="link"
                         />
 
                         <Link

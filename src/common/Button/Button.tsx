@@ -16,7 +16,7 @@ const Button: React.FC<ButtonProps> = ({
     buttonText,
     onClick = () => {},
     type = "button",
-    width = "14rem",
+    width = "18rem",
     height = "5rem",
     padding = "1.3rem 3.6rem",
     borderRadius = "0.4rem",
