@@ -20,10 +20,14 @@ const DropdownList: React.FC<DropdownList> = ({
             ? getCourseDuration(Number.parseInt(initialValue))
             : initialValue;
     };
+    const id = labelText.toLowerCase().replace(" ", "");
     return (
         <div className="dropdown-wrapper">
-            <label className="label">{labelText}</label>
+            <label htmlFor={id} className="label">
+                {labelText}
+            </label>
             <select
+                id={id}
                 className="dropdown"
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
