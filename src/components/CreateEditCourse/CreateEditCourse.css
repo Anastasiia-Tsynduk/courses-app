@@ -3,7 +3,7 @@
     margin: 10rem auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     gap: 3rem;
 }
 
@@ -92,4 +92,10 @@
     display: flex;
     justify-content: flex-end;
     gap: 2rem;
+}
+
+.heading-and-back {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

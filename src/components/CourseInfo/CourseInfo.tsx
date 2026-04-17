@@ -27,7 +27,12 @@ const CourseInfo: React.FC = () => {
 
     return (
         <div className="course-info-wrapper">
-            <h2>{course?.title}</h2>
+            <div className="heading-and-back">
+                <h2>{course?.title}</h2>
+                <Link to="/courses" className="link">
+                    {BUTTON_BACK}
+                </Link>
+            </div>
             <div className="course-info-container">
                 <div className="description-section">
                     <p className="description-title">Description:</p>
@@ -52,9 +57,6 @@ const CourseInfo: React.FC = () => {
                     </p>
                 </div>
             </div>
-            <Link to="/courses" className="link back">
-                {BUTTON_BACK}
-            </Link>
         </div>
     );
 };

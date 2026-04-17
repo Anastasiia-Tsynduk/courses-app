@@ -3,10 +3,11 @@ import Input from "@/common/Input/Input";
 import AuthorsSection from "../CreateCourse/AuthorsSection/AuthorsSection";
 import { Author } from "@/models/Author";
 import getCourseDuration from "@/helpers/getCourseDuration";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import "./CreateEditCourse.css";
+import { BUTTON_BACK } from "@/constants";
 
 type CreateEditCourseProps = {
     heading: string;
@@ -90,7 +91,12 @@ const CreateEditCourse: React.FC<CreateEditCourseProps> = ({
     const formattedDuration = getCourseDuration(Number(duration));
     return (
         <div className="create-course-wrapper">
-            <h2>{heading}</h2>
+            <div className="heading-and-back">
+                <h2>{heading}</h2>
+                <Link to="/courses" className="link">
+                    {BUTTON_BACK}
+                </Link>
+            </div>
             <div className="create-course-container">
                 <form onSubmit={handleSubmit}>
                     <div className="main-container">
