@@ -32,7 +32,7 @@ describe("authors reducers", () => {
     test("check if author is removed from state", () => {
         const state: Author[] = [mockAuthor];
 
-        const result = reducer(state, removeAuthor("1"));
+        const result = reducer(state, removeAuthor(mockAuthor.id));
 
         expect(result).toEqual([]);
     });
@@ -66,6 +66,7 @@ describe("authors extraReducers", () => {
 
         expect(result).toEqual([updatedAuthor]);
     });
+
     test("check if author is removed when removed succeeds", () => {
         const state: Author[] = [mockAuthor];
 
