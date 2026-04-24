@@ -23,16 +23,18 @@ const getUserFromLocalStorage = (): UserState => {
     const userString = localStorage.getItem("user");
     const token = localStorage.getItem("token");
 
-    const user =
-        userString && userString.trim().startsWith("{")
-            ? JSON.parse(userString)
-            : { name: "", email: "" };
+    const isCorrectUser =
+        userString != null && userString.trim().startsWith("{");
+
+    const user = isCorrectUser
+        ? JSON.parse(userString)
+        : { name: "", email: "" };
 
     return {
-        isAuth: !!token,
+        isAuth: !!token && isCorrectUser,
         name: user.name || "",
         email: user.email || "",
-        token: token || "",
+        token: !isCorrectUser ? "" : token || "",
     };
 };
 
@@ -48,14 +50,13 @@ const userSlice = createSlice({
             };
             return updatedState;
         },
-        logout() {
-            return { isAuth: false, name: "", email: "", token: "" };
-        },
     },
     extraReducers: (builder) =>
-        builder.addCase(logoutAsync.fulfilled, () => {}),
+        builder.addCase(logoutAsync.fulfilled, () => {
+            return { isAuth: false, name: "", email: "", token: "" };
+        }),
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login } = userSlice.actions;
 
 export default userSlice.reducer;
